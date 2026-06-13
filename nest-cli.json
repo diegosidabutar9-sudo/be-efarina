@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/lil-tepu-backend/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/lil-tepu-backend/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/lil-tepu-backend",
+  "projects": {
+    "auth-service": {
+      "type": "application",
+      "root": "apps/auth-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth-service/tsconfig.app.json"
+      }
+    },
+    "karyawan-service": {
+      "type": "application",
+      "root": "apps/karyawan-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/karyawan-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/karyawan-service/tsconfig.app.json"
+      }
+    },
+    "lil-tepu-backend": {
+      "type": "application",
+      "root": "apps/lil-tepu-backend",
+      "entryFile": "main",
+      "sourceRoot": "apps/lil-tepu-backend/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/lil-tepu-backend/tsconfig.app.json"
+      }
+    },
+    "penjadwalan-service": {
+      "type": "application",
+      "root": "apps/penjadwalan-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/penjadwalan-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/penjadwalan-service/tsconfig.app.json"
+      }
+    }
+  }
+}
