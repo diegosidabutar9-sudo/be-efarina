@@ -13,6 +13,8 @@
     "start:dev:auth": "nest start auth-service --watch",
     "start:dev:karyawan": "nest start karyawan-service --watch",
     "start:dev:penjadwalan": "nest start penjadwalan-service --watch",
+    "start:dev:attendance": "nest start attendance-service --watch",
+    "start:dev:payroll": "nest start payroll-service --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/lil-tepu-backend/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
