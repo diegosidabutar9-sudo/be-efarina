@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: presensi_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rahasia123
+      POSTGRES_DB: presensi
+    ports:
+      - '5434:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    networks:
+      - presensi_network
+
+volumes:
+  postgres_data:
+    external: true
+    name: skripsi-presensi_postgres_data
+
+networks:
+  presensi_network:
+    driver: bridge
