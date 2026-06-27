@@ -3,20 +3,44 @@ import { PayrollServiceController } from './payroll-service.controller';
 import { PayrollServiceService } from './payroll-service.service';
 
 describe('PayrollServiceController', () => {
-  let payrollServiceController: PayrollServiceController;
+  let controller: PayrollServiceController;
+  let service: PayrollServiceService;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [PayrollServiceController],
-      providers: [PayrollServiceService],
+      providers: [
+        {
+          provide: PayrollServiceService,
+          useValue: {
+            findAll: jest.fn().mockResolvedValue([{ id: '1', user_id: 'emp-1' }]),
+            findOne: jest.fn().mockResolvedValue({ id: '1', user_id: 'emp-1' }),
+            create: jest.fn().mockImplementation((dto) => Promise.resolve({ id: '2', ...dto })),
+            update: jest.fn().mockImplementation((id, dto) => Promise.resolve({ id, ...dto })),
+            remove: jest.fn().mockResolvedValue(undefined),
+          },
+        },
+      ],
     }).compile();
 
-    payrollServiceController = app.get<PayrollServiceController>(PayrollServiceController);
+    controller = module.get<PayrollServiceController>(PayrollServiceController);
+    service = module.get<PayrollServiceService>(PayrollServiceService);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(payrollServiceController.getHello()).toBe('Hello World!');
-    });
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+
+  it('findAll should return an array of payrolls', async () => {
+    const result = await controller.getAllPayrolls();
+    expect(result).toEqual([{ id: '1', user_id: 'emp-1' }]);
+    expect(service.findAll).toHaveBeenCalled();
+  });
+
+  it('findOne should return a single payroll', async () => {
+    const result = await controller.getPayrollById('1');
+    expect(result).toEqual({ id: '1', user_id: 'emp-1' });
+    expect(service.findOne).toHaveBeenCalledWith('1');
   });
 });
+

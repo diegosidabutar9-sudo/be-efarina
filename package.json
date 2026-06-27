@@ -22,7 +22,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/lil-tepu-backend/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/lil-tepu-backend/test/jest-e2e.json",
+    "prisma:generate": "npx prisma generate",
+    "prisma:generate:attendance": "npx prisma generate --schema=apps/attendance-service/prisma/schema.prisma",
+    "prisma:generate:payroll": "npx prisma generate --schema=apps/payroll-service/prisma/schema.prisma",
+    "prisma:generate:all": "yarn prisma:generate && yarn prisma:generate:attendance && yarn prisma:generate:payroll"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
