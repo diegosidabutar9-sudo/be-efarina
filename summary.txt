@@ -1,0 +1,36 @@
+Ringkasan Project Backend lil-tepu-backend
+
+Project ini adalah sebuah backend microservices berbasis NestJS yang menggunakan Prisma sebagai ORM untuk berinteraksi dengan database PostgreSQL. Project ini dirancang dengan arsitektur monorepo, yang membagi fungsionalitas ke dalam beberapa service terpisah. 
+
+Secara garis besar, project ini (berdasarkan skema database dan struktur microservices) adalah aplikasi Sistem Informasi Manajemen Sumber Daya Manusia (HRIS) atau Enterprise Resource Planning (ERP) yang mencakup berbagai modul untuk mengelola perusahaan, cabang, wilayah, pengguna, peran, serta fungsi spesifik HR.
+
+Daftar Service:
+1. lil-tepu-backend (Main Gateway / Core)
+2. auth-service (Manajemen Autentikasi dan Otorisasi pengguna)
+3. karyawan-service (Manajemen data karyawan)
+4. penjadwalan-service (Manajemen jadwal karyawan)
+5. attendance-service (Manajemen kehadiran karyawan)
+6. payroll-service (Manajemen penggajian karyawan)
+
+Kelebihan:
+- Skalabilitas Tinggi: Menggunakan arsitektur microservices (monorepo dengan NestJS) sehingga setiap modul (auth, karyawan, attendance, dll) dapat diskalakan dan dikembangkan secara independen.
+- Struktur Data Relasional yang Baik: Skema Prisma menunjukkan desain database relasional yang kuat (PostgreSQL) mencakup multi-tenant/multi-branch architecture, manajemen role & permission granular, serta dukungan lokalisasi (currency, country, state, city).
+- Penggunaan Teknologi Modern: NestJS dipadukan dengan Prisma ORM dan TypeScript menghasilkan sistem dengan tipe data yang ketat (type-safe) dan mudah di-maintain.
+- Modular & Terpusat: Repositori dikelola dalam bentuk monorepo sehingga memudahkan berbagi kode antar service dan manajemen dependensi melalui satu package.json.
+
+Kekurangan:
+- Kompleksitas Infrastruktur: Arsitektur microservices membutuhkan orkestrasi yang lebih rumit untuk komunikasi antar-service (misalnya menggunakan message broker seperti RabbitMQ/Kafka atau HTTP/gRPC) yang mungkin belum sepenuhnya terimplementasi dengan baik atau membutuhkan extra effort dalam deployment.
+- Duplikasi Skema Prisma: Terdapat beberapa file \schema.prisma\ di dalam masing-masing service (misal \pps/attendance-service/prisma/schema.prisma\). Jika tidak dikelola dengan baik, bisa terjadi inkonsistensi struktur database antar microservices atau migrasi menjadi rumit.
+- Kurangnya API Gateway Terintegrasi / Dokumentasi: Belum terlihat kejelasan terkait bagaimana client (Frontend) berkomunikasi dengan semua service tersebut (apakah \lil-tepu-backend\ berfungsi sebagai API Gateway atau menggunakan reverse proxy/Nginx).
+- Overengineering: Untuk skala sistem yang kecil atau menengah, arsitektur microservices bisa menjadi overengineering dan memperlambat proses development (monolith seringkali lebih cepat di awal).
+
+Yang Perlu Ditambahkan:
+- Message Broker / Event Bus: Untuk komunikasi asinkron antar microservice yang lebih handal (RabbitMQ, Kafka, atau Redis Pub/Sub) agar ketika satu service mati tidak mengganggu proses di service lain.
+- API Gateway & Service Discovery: Jika \lil-tepu-backend\ bukan API Gateway, perlu ditambahkan alat seperti Kong, Traefik, atau NestJS Gateway untuk merutekan request dari luar ke microservices yang tepat.
+- Shared Library (libs/): Membuat folder \libs/\ di monorepo (fitur bawaan NestJS monorepo) untuk menaruh kode-kode yang dipakai bersama (misal DTO, interface, middleware auth, exception filter) sehingga tidak terjadi duplikasi kode antar service.
+- CI/CD & Containerization Orchestration: File \docker-compose.yml\ sudah ada, tapi untuk microservices lebih ideal jika didukung oleh Kubernetes atau minimal dokumentasi alur deployment menggunakan Github Actions / Gitlab CI.
+- Centralized Logging & Monitoring: Menambahkan ELK Stack, Prometheus, atau Grafana untuk memonitoring setiap microservice karena melacak error di microservices cukup sulit tanpa central log.
+
+Yang Perlu Dikurangi:
+- Konsolidasi Schema DB: Mengurangi file schema Prisma yang terpisah (jika database-nya ternyata satu/shared database). Jika menggunakan shared database, sebaiknya jadikan satu Prisma schema di \libs/\ atau root project. Jika database per service (database-per-service pattern), hal ini tidak perlu dikurangi namun perlu dikelola migrasinya dengan hati-hati.
+- Dependensi yang tidak dipakai: Meninjau ulang package.json secara berkala untuk membuang module yang berlebihan.

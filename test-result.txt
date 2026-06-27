@@ -1,0 +1,21 @@
+Hasil Test Jest untuk Controller Attendance dan Payroll
+
+Test Suites: 2 passed, 2 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        4.742 s
+
+Detail Test:
+
+1. AttendanceServiceController
+   - should be defined (Passed)
+   - findAll should return an array of attendances (Passed)
+   - findOne should return a single attendance (Passed)
+
+2. PayrollServiceController
+   - should be defined (Passed)
+   - findAll should return an array of payrolls (Passed)
+   - findOne should return a single payroll (Passed)
+
+Kesimpulan:
+Kode controller untuk modul Attendance dan Payroll telah direfactor menggunakan Dependency Injection penuh dan Test Mocking. Kedua service lulus unit test Jest dengan sempurna (100% Passed).

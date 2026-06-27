@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/@prisma/client-attendance"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("ATTENDANCE_DATABASE_URL")
+}
+
+model attendances {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id    String    @db.Uuid
+  date       DateTime  @db.Date
+  check_in   DateTime? @db.Timestamptz(6)
+  check_out  DateTime? @db.Timestamptz(6)
+  status     String    @db.VarChar(50)
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+}
