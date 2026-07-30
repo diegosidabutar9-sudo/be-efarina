@@ -1,6 +1,6 @@
 Ringkasan Project Backend lil-tepu-backend
 
-Project ini adalah sebuah backend microservices berbasis NestJS yang menggunakan Prisma sebagai ORM untuk berinteraksi dengan database PostgreSQL. Project ini dirancang dengan arsitektur monorepo, yang membagi fungsionalitas ke dalam beberapa service terpisah. 
+Project ini adalah sebuah backend microservices berbasis NestJS yang menggunakan Prisma sebagai ORM untuk berinteraksi dengan database PostgreSQL. Project ini dirancang dengan arsitektur monorepo, yang membagi fungsionalitas ke dalam beberapa service terpisah.
 
 Secara garis besar, project ini (berdasarkan skema database dan struktur microservices) adalah aplikasi Sistem Informasi Manajemen Sumber Daya Manusia (HRIS) atau Enterprise Resource Planning (ERP) yang mencakup berbagai modul untuk mengelola perusahaan, cabang, wilayah, pengguna, peran, serta fungsi spesifik HR.
 
@@ -20,7 +20,7 @@ Kelebihan:
 
 Kekurangan:
 - Kompleksitas Infrastruktur: Arsitektur microservices membutuhkan orkestrasi yang lebih rumit untuk komunikasi antar-service (misalnya menggunakan message broker seperti RabbitMQ/Kafka atau HTTP/gRPC) yang mungkin belum sepenuhnya terimplementasi dengan baik atau membutuhkan extra effort dalam deployment.
-- Duplikasi Skema Prisma: Terdapat beberapa file \schema.prisma\ di dalam masing-masing service (misal \pps/attendance-service/prisma/schema.prisma\). Jika tidak dikelola dengan baik, bisa terjadi inkonsistensi struktur database antar microservices atau migrasi menjadi rumit.
+- Duplikasi Skema Prisma: Terdapat beberapa file \schema.prisma\ di dalam masing-masing service (misal \ pps/attendance-service/prisma/schema.prisma\). Jika tidak dikelola dengan baik, bisa terjadi inkonsistensi struktur database antar microservices atau migrasi menjadi rumit.
 - Kurangnya API Gateway Terintegrasi / Dokumentasi: Belum terlihat kejelasan terkait bagaimana client (Frontend) berkomunikasi dengan semua service tersebut (apakah \lil-tepu-backend\ berfungsi sebagai API Gateway atau menggunakan reverse proxy/Nginx).
 - Overengineering: Untuk skala sistem yang kecil atau menengah, arsitektur microservices bisa menjadi overengineering dan memperlambat proses development (monolith seringkali lebih cepat di awal).
 

@@ -4,11 +4,14 @@ import { AuthServiceModule } from './auth-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
+  app.enableCors();
+  app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
     .setTitle('Auth Service API')
     .setDescription('Dokumentasi API untuk Auth Service')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

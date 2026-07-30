@@ -7,7 +7,8 @@ import { AttendanceServiceModule } from './attendance-service.module';
 async function bootstrap() {
   const app = await NestFactory.create(AttendanceServiceModule);
 
-  app.enableCors(); // Enable CORS for API clients
+  app.enableCors();
+  app.setGlobalPrefix('api'); // Enable CORS for API clients
 
   const config = new DocumentBuilder()
     .setTitle('Attendance Service API')
@@ -15,6 +16,7 @@ async function bootstrap() {
     .setVersion('1.0.0')
     .setContact('Developer Support', '', 'support@example.com')
     .addServer(`http://localhost:${process.env.ATTENDANCE_PORT ?? 3004}`, 'Local Server')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

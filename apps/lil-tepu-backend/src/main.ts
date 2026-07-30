@@ -7,7 +7,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors(); // Enable CORS for Cross-Origin requests
+  app.enableCors();
+  app.setGlobalPrefix('api'); // Enable CORS for Cross-Origin requests
 
   const config = new DocumentBuilder()
     .setTitle('E-Farina API Gateway')
@@ -17,6 +18,7 @@ async function bootstrap() {
     .setContact('E-Farina Engineering Team', 'https://example.com/support', 'support@example.com')
     .setLicense('MIT License', 'https://opensource.org/licenses/MIT')
     .addServer(`http://localhost:${process.env.PORT ?? 3000}`, 'Development Server')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

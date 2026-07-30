@@ -1,0 +1,8 @@
+Write-Host "Starting all NestJS backend services..."
+Start-Process -FilePath "yarn" -ArgumentList "start:dev" -WindowStyle Normal -Title "Main API (3000)"
+Start-Process -FilePath "yarn" -ArgumentList "start:dev:auth" -WindowStyle Normal -Title "Auth API (3001)"
+Start-Process -FilePath "yarn" -ArgumentList "start:dev:karyawan" -WindowStyle Normal -Title "Karyawan API (3002)"
+Start-Process -FilePath "yarn" -ArgumentList "start:dev:penjadwalan" -WindowStyle Normal -Title "Penjadwalan API (3003)"
+Start-Process -FilePath "yarn" -ArgumentList "start:dev:attendance" -WindowStyle Normal -Title "Attendance API (3004)"
+Start-Process -FilePath "yarn" -ArgumentList "start:dev:payroll" -WindowStyle Normal -Title "Payroll API (3005)"
+Write-Host "All services started in separate windows."

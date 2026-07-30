@@ -14,6 +14,7 @@ class HealthCheckResponse {
 }
 
 @ApiTags('System Health')
+@ApiResponse({ status: 500, description: 'Internal Server Error.' })
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}

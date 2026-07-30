@@ -4,11 +4,14 @@ import { PenjadwalanServiceModule } from './penjadwalan-service.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(PenjadwalanServiceModule);
+  app.enableCors();
+  app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
     .setTitle('Penjadwalan Service API')
     .setDescription('Dokumentasi API untuk Penjadwalan Service')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

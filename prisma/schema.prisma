@@ -1,11 +1,13 @@
 generator client {
-  provider = "prisma-client-js"
-  engineType = "library"
+  provider        = "prisma-client-js"
+  engineType      = "library"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["public"]
 }
 
 model branches {
@@ -24,6 +26,7 @@ model branches {
   companies     companies?      @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   notifications notifications[]
   user_roles    user_roles[]
+  @@schema("public")
 }
 
 model cities {
@@ -39,6 +42,7 @@ model cities {
   deleted_by     String?         @db.VarChar(50)
   branches       branches[]
   states_regions states_regions? @relation(fields: [state_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  @@schema("public")
 }
 
 model companies {
@@ -54,6 +58,7 @@ model companies {
   deleted_by  String?     @db.VarChar(50)
   branches    branches[]
   currencies  currencies? @relation(fields: [currency_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  @@schema("public")
 }
 
 model countries {
@@ -71,6 +76,7 @@ model countries {
   deleted_by     String?          @db.VarChar(50)
   currencies     currencies?      @relation(fields: [currency_id], references: [id], onUpdate: NoAction)
   states_regions states_regions[]
+  @@schema("public")
 }
 
 model currencies {
@@ -88,6 +94,7 @@ model currencies {
   deleted_by     String?     @db.VarChar(50)
   companies      companies[]
   countries      countries[]
+  @@schema("public")
 }
 
 model menus {
@@ -108,6 +115,7 @@ model menus {
   menus       menus?       @relation("menusTomenus", fields: [parent_id], references: [id], onUpdate: NoAction)
   other_menus menus[]      @relation("menusTomenus")
   role_menus  role_menus[]
+  @@schema("public")
 }
 
 model modules {
@@ -126,6 +134,7 @@ model modules {
   deleted_by  String?       @db.VarChar(50)
   menus       menus[]
   permissions permissions[]
+  @@schema("public")
 }
 
 model notifications {
@@ -143,6 +152,7 @@ model notifications {
   deleted_by String?   @db.VarChar(50)
   branches   branches? @relation(fields: [branch_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users      users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  @@schema("public")
 }
 
 model permissions {
@@ -159,6 +169,7 @@ model permissions {
   deleted_by       String?            @db.VarChar(50)
   modules          modules            @relation(fields: [module_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   role_permissions role_permissions[]
+  @@schema("public")
 }
 
 model role_menus {
@@ -170,6 +181,7 @@ model role_menus {
   roles      roles     @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([role_id, menu_id])
+  @@schema("public")
 }
 
 model role_permissions {
@@ -181,6 +193,7 @@ model role_permissions {
   roles         roles       @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([role_id, permission_id])
+  @@schema("public")
 }
 
 model roles {
@@ -198,6 +211,7 @@ model roles {
   role_menus       role_menus[]
   role_permissions role_permissions[]
   user_roles       user_roles[]
+  @@schema("public")
 }
 
 model states_regions {
@@ -213,6 +227,7 @@ model states_regions {
   deleted_by String?    @db.VarChar(50)
   cities     cities[]
   countries  countries? @relation(fields: [country_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  @@schema("public")
 }
 
 model user_roles {
@@ -226,6 +241,7 @@ model user_roles {
   users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([user_id, role_id, branch_id])
+  @@schema("public")
 }
 
 model users {
@@ -246,4 +262,5 @@ model users {
   deleted_by    String?         @db.VarChar(50)
   notifications notifications[]
   user_roles    user_roles[]
+  @@schema("public")
 }

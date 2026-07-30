@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: rahasia123
-      POSTGRES_DB: presensi
+      POSTGRES_DB: skripsi
     ports:
       - '5434:5432'
     volumes:

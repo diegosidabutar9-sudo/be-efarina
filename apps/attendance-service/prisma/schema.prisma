@@ -1,20 +1,29 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../../../node_modules/@prisma/client-attendance"
+  provider        = "prisma-client-js"
+  output          = "../../../node_modules/@prisma/client-attendance"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("ATTENDANCE_DATABASE_URL")
+  schemas  = ["attendance"]
 }
 
 model attendances {
-  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  user_id    String    @db.Uuid
-  date       DateTime  @db.Date
-  check_in   DateTime? @db.Timestamptz(6)
-  check_out  DateTime? @db.Timestamptz(6)
-  status     String    @db.VarChar(50)
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  id            String    @id @default(uuid()) @db.Uuid
+  user_id       String    @db.Uuid
+  date          DateTime  @db.Date
+  shift_type    String?   @db.VarChar(20) // e.g. PAGI, SIANG, MALAM, LIBUR
+  check_in      DateTime? @db.Timestamptz(6)
+  check_out     DateTime? @db.Timestamptz(6)
+  check_in_lat  Decimal?  @db.Decimal(10, 8)
+  check_in_long Decimal?  @db.Decimal(11, 8)
+  check_in_ip   String?   @db.VarChar(45)
+  status        String    @db.VarChar(50)
+  notes         String?
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@schema("attendance")
 }
